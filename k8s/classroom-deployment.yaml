@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: classroom-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: classroom
+  template:
+    metadata:
+      labels:
+        app: classroom
+    spec:
+      containers:
+        - name: classroom
+          image: us.gcr.io/deducee-333504/classroom
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
